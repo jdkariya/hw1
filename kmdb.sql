@@ -100,14 +100,129 @@
 .headers off
 
 -- Drop existing tables, so you'll start fresh each time this script is run.
--- TODO!
+DROP TABLE IF EXISTS Movies;
+DROP TABLE IF EXISTS Studios;
+DROP TABLE IF EXISTS Actors;
+DROP TABLE IF EXISTS Cast;
+
+
 
 -- Create new tables, according to your domain model
--- TODO!
+CREATE TABLE Movies (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  title TEXT,
+  year_released TEXT,
+  MPAA_rating TEXT,
+  studio_id INTEGER
+);
+
+CREATE TABLE Studios (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  studio_name TEXT
+);
+
+CREATE TABLE Actors (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT,
+  character_name TEXT
+);
+
+CREATE TABLE Casts (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  movie_id INTEGER,
+  actor_id INTEGER
+);
 
 -- Insert data into your database that reflects the sample data shown above
--- Use hard-coded foreign key IDs when necessary
--- TODO!
+INSERT INTO Studios (studio_name)
+VALUES ("Warner Bros.");
+
+INSERT INTO Movies (title, year_released, MPAA_rating, studio_id)
+VALUES ("Batman Begins","2005","PG-13",1);
+
+INSERT INTO Movies (title, year_released, MPAA_rating, studio_id)
+VALUES ("The Dark Knight","2008","PG-13",1);
+
+INSERT INTO Movies (title, year_released, MPAA_rating, studio_id)
+VALUES ("The Dark Knight Rises","2012","PG-13",1);
+
+INSERT INTO Actors (name, character_name)
+VALUES ("Christian Bale","Bruce Wayne");
+
+INSERT INTO Actors (name, character_name)
+VALUES ("Michael Caine","Alfred");
+
+INSERT INTO Actors (name, character_name)
+VALUES ("Liam Neeson","Ra's Al Ghul");
+
+INSERT INTO Actors (name, character_name)
+VALUES ("Katie Holmes","Rachel Dawes");
+
+INSERT INTO Actors (name, character_name)
+VALUES ("Gary Oldman","Commissioner Gordon");
+
+INSERT INTO Actors (name, character_name)
+VALUES ("Heath Ledger","Joker");
+
+INSERT INTO Actors (name, character_name)
+VALUES ("Aaron Eckhart","Harvey Dent");
+
+INSERT INTO Actors (name, character_name)
+VALUES ("Maggie Gyllenhaal","Rachel Dawes");
+
+INSERT INTO Actors (name, character_name)
+VALUES ("Tom Hardy","Bane");
+
+INSERT INTO Actors (name, character_name)
+VALUES ("Joseph Gordon-Levitt","John Blake");
+
+INSERT INTO Actors (name, character_name)
+VALUES ("Anne Hathaway","Selina Kyle");
+
+INSERT INTO Casts (movie_id, actor_id)
+VALUES (1,1);
+
+INSERT INTO Casts (movie_id, actor_id)
+VALUES (1,2);
+
+INSERT INTO Casts (movie_id, actor_id)
+VALUES (1,3);
+
+INSERT INTO Casts (movie_id, actor_id)
+VALUES (1,4);
+
+INSERT INTO Casts (movie_id, actor_id)
+VALUES (1,5);
+
+INSERT INTO Casts (movie_id, actor_id)
+VALUES (2,1);
+
+INSERT INTO Casts (movie_id, actor_id)
+VALUES (2,6);
+
+INSERT INTO Casts (movie_id, actor_id)
+VALUES (2,7);
+
+INSERT INTO Casts (movie_id, actor_id)
+VALUES (2,2);
+
+INSERT INTO Casts (movie_id, actor_id)
+VALUES (2,8);
+
+INSERT INTO Casts (movie_id, actor_id)
+VALUES (3,1);
+
+INSERT INTO Casts (movie_id, actor_id)
+VALUES (3,5);
+
+INSERT INTO Casts (movie_id, actor_id)
+VALUES (3,9);
+
+INSERT INTO Casts (movie_id, actor_id)
+VALUES (3,10);
+
+INSERT INTO Casts (movie_id, actor_id)
+VALUES (3,11);
 
 -- Prints a header for the movies output
 .print "Movies"
@@ -115,7 +230,8 @@
 .print ""
 
 -- The SQL statement for the movies output
--- TODO!
+SELECT Movies.title, Movies.year_released, Movies.MPAA_rating, Studios.studio_name
+FROM Movies INNER JOIN Studios ON Movies.studio_id = Studios.id;
 
 -- Prints a header for the cast output
 .print ""
@@ -123,6 +239,8 @@
 .print "========"
 .print ""
 
-
--- The SQL statement for the cast output
--- TODO!
+SELECT Movies.title, Actors.name, Actors.character_name
+FROM Movies
+JOIN Casts ON Movies.id = Casts.movie_id
+JOIN Actors ON Casts.actor_id = Actors.id
+ORDER BY Movies.title;
