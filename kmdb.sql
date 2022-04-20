@@ -103,7 +103,7 @@
 DROP TABLE IF EXISTS Movies;
 DROP TABLE IF EXISTS Studios;
 DROP TABLE IF EXISTS Actors;
-DROP TABLE IF EXISTS Cast;
+DROP TABLE IF EXISTS Casts;
 
 
 
@@ -241,6 +241,6 @@ FROM Movies INNER JOIN Studios ON Movies.studio_id = Studios.id;
 
 SELECT Movies.title, Actors.name, Actors.character_name
 FROM Movies
-JOIN Casts ON Movies.id = Casts.movie_id
-JOIN Actors ON Casts.actor_id = Actors.id
+INNER JOIN Casts ON Movies.id = Casts.movie_id
+INNER JOIN Actors ON Casts.actor_id = Actors.id
 ORDER BY Movies.title;
